@@ -32,12 +32,6 @@ import Layout from '@/layout'
  */
 export const constantRoutes = [
   {
-    path: '/login',
-    component: () => import('@/views/login/index'),
-    hidden: true
-  },
-
-  {
     path: '/404',
     component: () => import('@/views/404'),
     hidden: true
@@ -49,9 +43,29 @@ export const constantRoutes = [
     redirect: '/dashboard',
     children: [{
       path: 'dashboard',
-      name: 'Dashboard',
+      name: '首页',
       component: () => import('@/views/dashboard/index'),
-      meta: { title: 'Dashboard', icon: 'dashboard' }
+      meta: { title: '首页', icon: 'home' }
+    }]
+  },
+  {
+    path: '/iqid-search',
+    component: Layout,
+    children: [{
+      path: 'iqid-search',
+      name: 'ID查询',
+      component: () => import('@/views/dashboard/index'),
+      meta: { title: 'ID查询', icon: 'search' }
+    }]
+  },
+  {
+    path: '/config',
+    component: Layout,
+    children: [{
+      path: 'config',
+      name: '云控中心',
+      component: () => import('@/views/dashboard/index'),
+      meta: { title: '云控中心', icon: 'config' }
     }]
   },
 
