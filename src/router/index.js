@@ -54,7 +54,7 @@ export const constantRoutes = [
     children: [{
       path: 'iqid-search',
       name: 'ID查询',
-      component: () => import('@/views/dashboard/index'),
+      component: () => import('@/views/id-search/index'),
       meta: { title: 'ID查询', icon: 'search' }
     }]
   },

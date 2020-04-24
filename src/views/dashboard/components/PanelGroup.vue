@@ -2,55 +2,55 @@
   <el-row :gutter="40" class="panel-group">
     <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
       <div class="card-panel" @click="handleSetLineChartData('newVisitis')">
-        <div class="card-panel-icon-wrapper icon-people">
-          <svg-icon icon-class="peoples" class-name="card-panel-icon"/>
+        <div class="card-panel-icon-wrapper icon-iqid">
+          <svg-icon icon-class="cloud" class-name="card-panel-icon"/>
         </div>
         <div class="card-panel-description">
           <div class="card-panel-text">
-            新增IQID
+            iqid
           </div>
           <div>
-            <count-to :start-val="0" :end-val="10400" :duration="2600" class="card-panel-num"/>
+            <count-to :start-val="iqidTotalCnt*startRatio" :end-val="iqidTotalCnt" :duration="1000" class="card-panel-num"/>
           </div>
         </div>
       </div>
     </el-col>
     <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
       <div class="card-panel" @click="handleSetLineChartData('messages')">
-        <div class="card-panel-icon-wrapper icon-message">
-          <svg-icon icon-class="message" class-name="card-panel-icon"/>
+        <div class="card-panel-icon-wrapper icon-biqid">
+          <svg-icon icon-class="app" class-name="card-panel-icon"/>
         </div>
         <div class="card-panel-description">
           <div class="card-panel-text">
-            IQID
+            biqid
           </div>
-          <count-to :start-val="0" :end-val="81212" :duration="3000" class="card-panel-num"/>
+          <count-to :start-val="biqidTotalCnt*startRatio" :end-val="biqidTotalCnt" :duration="1000" class="card-panel-num"/>
         </div>
       </div>
     </el-col>
     <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
       <div class="card-panel" @click="handleSetLineChartData('purchases')">
-        <div class="card-panel-icon-wrapper icon-money">
-          <svg-icon icon-class="money" class-name="card-panel-icon"/>
+        <div class="card-panel-icon-wrapper icon-iqid-new">
+          <svg-icon icon-class="cloud-upload" class-name="card-panel-icon"/>
         </div>
         <div class="card-panel-description">
           <div class="card-panel-text">
-            Purchases
+            新增iqid
           </div>
-          <count-to :start-val="0" :end-val="9280" :duration="3200" class="card-panel-num"/>
+          <count-to :start-val="iqidNewCnt*startRatio" :end-val="iqidNewCnt" :duration="1000" class="card-panel-num"/>
         </div>
       </div>
     </el-col>
     <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
       <div class="card-panel" @click="handleSetLineChartData('shoppings')">
-        <div class="card-panel-icon-wrapper icon-shopping">
-          <svg-icon icon-class="shopping" class-name="card-panel-icon"/>
+        <div class="card-panel-icon-wrapper icon-biqid-new">
+          <svg-icon icon-class="app" class-name="card-panel-icon"/>
         </div>
         <div class="card-panel-description">
           <div class="card-panel-text">
-            Shoppings
+            新增biqid
           </div>
-          <count-to :start-val="0" :end-val="13600" :duration="3600" class="card-panel-num"/>
+          <count-to :start-val="biqidNewCnt*startRatio" :end-val="biqidNewCnt" :duration="1000" class="card-panel-num"/>
         </div>
       </div>
     </el-col>
@@ -59,15 +59,39 @@
 
 <script>
   import CountTo from 'vue-count-to'
+  import * as statService from '@/api/stat'
+  import {success} from "../../../utils/request";
 
   export default {
     components: {
       CountTo
     },
+    data: function () {
+      return {
+        startRatio: 0.75,
+        iqidTotalCnt: 0,
+        biqidTotalCnt: 0,
+        iqidNewCnt: 0,
+        biqidNewCnt: 0
+      }
+    },
     methods: {
+      setData: function () {
+        statService.getPanelData().then(res => {
+          if (success(res.code)) {
+            this.iqidTotalCnt = res.data.iqidTotalCnt;
+            this.iqidNewCnt = res.data.iqidNewCnt;
+            this.biqidTotalCnt = res.data.biqidTotalCnt;
+            this.biqidNewCnt = res.data.biqidNewCnt;
+          }
+        })
+      },
       handleSetLineChartData(type) {
         this.$emit('handleSetLineChartData', type)
       }
+    },
+    mounted: function () {
+      this.setData();
     }
   }
 </script>
@@ -96,37 +120,37 @@
           color: #fff;
         }
 
-        .icon-people {
+        .icon-iqid {
           background: #40c9c6;
         }
 
-        .icon-message {
+        .icon-biqid {
           background: #36a3f7;
         }
 
-        .icon-money {
-          background: #f4516c;
+        .icon-iqid-new {
+          color: #40c9c6
         }
 
-        .icon-shopping {
-          background: #34bfa3
+        .icon-biqid-new {
+          background: #36a3f7
         }
       }
 
-      .icon-people {
+      .icon-iqid {
         color: #40c9c6;
       }
 
-      .icon-message {
-        color: #36a3f7;
+      .icon-biqid {
+        color: #36a3f7
       }
 
-      .icon-money {
-        color: #f4516c;
+      .icon-iqid-new {
+        color: #40c9c6
       }
 
-      .icon-shopping {
-        color: #34bfa3
+      .icon-biqid-new {
+        color: #36a3f7
       }
 
       .card-panel-icon-wrapper {

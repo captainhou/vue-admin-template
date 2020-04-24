@@ -50,4 +50,8 @@ service.interceptors.response.use(
   }
 )
 
+export function success(code) {
+  return code === 'A0000'
+}
+
 export default service
