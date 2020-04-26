@@ -6,6 +6,7 @@
     "alpha": "vue-cli-service build --mode alpha",
     "build": "vue-cli-service build --mode prod"
   },
+
   "dependencies": {
     "axios": "0.18.1",
     "element-ui": "2.13.1",
